@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>KrimeShu 的点滴积累</title>
+  <title>krimeshu 的点滴积累</title>
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://moonshell.github.io/"/>
-  <updated>2017-02-14T02:21:38.860Z</updated>
+  <updated>2017-02-14T07:00:17.156Z</updated>
   <id>http://moonshell.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://moonshell.github.io/2017/02/13/vue-php-template-convertor/"/>
     <id>http://moonshell.github.io/2017/02/13/vue-php-template-convertor/</id>
     <published>2017-02-13T08:36:09.503Z</published>
-    <updated>2017-02-14T02:21:38.860Z</updated>
+    <updated>2017-02-14T07:00:17.156Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>测试方案，欢迎提出新的思路，共同探讨！</p>
@@ -103,6 +103,18 @@
     
     </summary>
     
+      <category term="前端" scheme="http://moonshell.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="vue" scheme="http://moonshell.github.io/tags/vue/"/>
+    
+      <category term="php" scheme="http://moonshell.github.io/tags/php/"/>
+    
+      <category term="模板" scheme="http://moonshell.github.io/tags/%E6%A8%A1%E6%9D%BF/"/>
+    
+      <category term="直出" scheme="http://moonshell.github.io/tags/%E7%9B%B4%E5%87%BA/"/>
+    
+      <category term="SSR" scheme="http://moonshell.github.io/tags/SSR/"/>
     
   </entry>
   
