@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://krimeshu.github.io/"/>
+  <link href="http://blog.krimeshu.com/"/>
   <updated>2017-02-16T07:19:35.987Z</updated>
-  <id>http://krimeshu.github.io/</id>
+  <id>http://blog.krimeshu.com/</id>
   
   <author>
     <name>krimeshu</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>探索PHP与Vue通用直出模板方案</title>
-    <link href="http://krimeshu.github.io/2017/02/13/vue-php-template-convertor/"/>
-    <id>http://krimeshu.github.io/2017/02/13/vue-php-template-convertor/</id>
+    <link href="http://blog.krimeshu.com/2017/02/13/vue-php-template-convertor/"/>
+    <id>http://blog.krimeshu.com/2017/02/13/vue-php-template-convertor/</id>
     <published>2017-02-13T08:36:09.503Z</published>
     <updated>2017-02-16T07:19:35.987Z</updated>
     
@@ -105,18 +105,18 @@
     
     </summary>
     
-      <category term="前端" scheme="http://krimeshu.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="http://blog.krimeshu.com/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="vue" scheme="http://krimeshu.github.io/tags/vue/"/>
+      <category term="vue" scheme="http://blog.krimeshu.com/tags/vue/"/>
     
-      <category term="php" scheme="http://krimeshu.github.io/tags/php/"/>
+      <category term="php" scheme="http://blog.krimeshu.com/tags/php/"/>
     
-      <category term="模板" scheme="http://krimeshu.github.io/tags/%E6%A8%A1%E6%9D%BF/"/>
+      <category term="模板" scheme="http://blog.krimeshu.com/tags/%E6%A8%A1%E6%9D%BF/"/>
     
-      <category term="直出" scheme="http://krimeshu.github.io/tags/%E7%9B%B4%E5%87%BA/"/>
+      <category term="直出" scheme="http://blog.krimeshu.com/tags/%E7%9B%B4%E5%87%BA/"/>
     
-      <category term="SSR" scheme="http://krimeshu.github.io/tags/SSR/"/>
+      <category term="SSR" scheme="http://blog.krimeshu.com/tags/SSR/"/>
     
   </entry>
   
