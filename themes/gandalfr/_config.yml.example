@@ -1,0 +1,21 @@
+menu:
+    Blog: /
+    Archive: /archives/
+    GitHub:
+    Stackoverflow:
+    Rss: /atom.xml
+
+favicon: /favicon.ico
+logo: https://avatars1.githubusercontent.com/u/3142935?v=3&s=466 or file
+
+# Comment
+# e.g disqus: seansun
+disqus:
+duoshuo:
+
+# Analytics
+# google-analytics:
+# ga: UA-65933410-1
+
+# Copyright Infomation
+startyear: 2017
