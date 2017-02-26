@@ -38,11 +38,11 @@ tags:
 
 但根据 Vue 作者的回复，Vue 依赖于一些第三方模块，以及使用了 node.js 的 stream 等功能，php-v8js 提供的环境并不能实现 Vue 的服务端直出。
 
-> 参考地址：https://github.com/vuejs/vue/issues/4101
+> 参考地址，Vue作者对于 php 环境下 SSR 的回复：https://github.com/vuejs/vue/issues/4101
 
 React 的话，有一篇文章，描述了通过 php-v8js 实现的 React SSR (Server-Side Render)。
 
-> 参考地址：http://www.phpied.com/server-side-react-with-php/
+> 参考地址，使用 react-php-v8js 实现 SSR：http://www.phpied.com/server-side-react-with-php/
 
 目前看来，至少使用 React 的方案是可行的。
 
