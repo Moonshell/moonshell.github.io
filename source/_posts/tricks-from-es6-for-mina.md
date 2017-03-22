@@ -67,9 +67,9 @@ Page({
 
 ## 2. 数组方法
 
-虽然都说微信小程序 `wxml` 的 `Mustache` 语法与 `Vue.js` 很相似。但据说是为了分离 `UI` 线程和 `AppService` 线程，微信小程序暂时并不支持 `{{value | filter}}` 的写法。
+虽然都说微信小程序 `wxml` 的 `Mustache` 语法与 `Vue.js` 很相似。但据说是为了分离 `UI` 线程和 `AppService` 线程，微信小程序暂时并不支持 `&#123;&#123;value | filter}}` 的写法。
 
-这时候可以借助于 `ES6` 中为数组对象增加的方法：
+这时候可以借助于 `ES5` 中为数组对象增加的方法，之前因为浏览器兼容性问题，不一定全部能用。如今在移动端了，就尽情用起来吧：
 
 输出数据前，对后台传来的列表数据做一些预处理后再显示时，通常使用 `Array.prototype.forEach` 和 `Array.prototype.map` 进行相应处理；
 筛选掉无效数据，可以使用 `Array.prototype.filter`。
@@ -99,6 +99,10 @@ net.get('/Index/getList', (res = {}) => {
 
 ## 3. Rest 解构赋值
 
+截止我写这篇文章的时候，小程序官方的组件标准仍然没有出来。
+
+通常方案是，通过 `template` 配合解构赋值不同对象的数据，实现组件各自状态独立的效果。
+
 ## 4. 增强的对象字面量
 
 * `setData()` 中的字段名
@@ -107,13 +111,28 @@ net.get('/Index/getList', (res = {}) => {
 
 ## 5. Class 与继承
 
+```javascript
+class Base {
+    constructor (options, otherArg) {
+        // Do something.
+    }
+}
+
+class ChildType {
+    constructor (options) {
+        super(options, ChildType);
+        // Do something.
+    }
+}
+```
+
 ## 6. 其它
 
 字符串模板、`let` 与 `const`。
 
 ## 补充：
 
-微信小程序使用的 `babel` 启用的转码规则可能较旧，截止目前版本，测试使用以下 `ES6` 会有问题，需要注意。
+微信小程序使用的 `babel` 启用的转码规则可能不是最新的，截止目前版本，测试使用以下 `ES6` 会有问题，需要注意。
 
 * Class 内部的字段；
 * for...in 语法遍历对象；
