@@ -7,7 +7,7 @@ block container
         script(type='text/javascript', charset='utf-8', src='/js/tagcloud.js')
         script(type='text/javascript', charset='utf-8', src='/js/tagcanvas.js')
         #myCanvasContainer.widget.tagcloud(align='center')
-            canvas#resCanvas(width='600', height='500', align=center)
+            canvas#resCanvas(width='600', height='500', align=center, style='max-width: 100%;')
                 !=tagcloud()
             !=tagcloud()
     +postList()
