@@ -54,5 +54,8 @@ mixin post(item)
                         a.tag-title(href=url_for(tag.path))
                             != '#' + tag.name
             +postInfo(item)
+            if item.toc
+              include toc
+              +toc(item)
             .post-content
                 != item.content

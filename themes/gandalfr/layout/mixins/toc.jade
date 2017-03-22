@@ -1,0 +1,16 @@
+mixin toc(page)
+  aside#toc.toc-wrap
+    h3.toc-title 目录
+    div.toc-tree
+      != toc(page.content, {list_number: true})
+  style.
+    .toc-wrap {
+        float: right;
+        padding: 10px 30px 20px 24px;
+        margin-bottom: 10px;
+        background: #f2f8f2;
+    }
+    .toc-title::before {
+        content: '#';
+        color: #42b983
+    }

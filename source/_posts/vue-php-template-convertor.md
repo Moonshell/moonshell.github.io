@@ -8,11 +8,12 @@ tags:
 - 模板
 - 直出
 - SSR
+toc: true
 ---
 
-{% img "/images/vue-php-template-convertor/cover-1.png" cover %}
-
 > 测试方案，欢迎提出新的思路，共同探讨！
+
+{% img "/images/vue-php-template-convertor/cover-1.png" cover %}
 
 <!-- more -->
 
