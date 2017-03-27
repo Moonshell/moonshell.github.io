@@ -91,7 +91,7 @@ var helpers = {
 net.get('/Index/getList', (res = {}) => {
     let {status, data: {list}} = res;
     this.set({
-        list: list.filter(helpers.hasTime)  // 去掉没有时间戳字段的数据
+        list: list.filter(helpers.hasTime)  // 筛选掉没有时间戳字段的数据
                   .map(helpers.parseTime)   // 将时间戳字段转化为 JS 的 Date 对象
     });
 });
@@ -99,17 +99,140 @@ net.get('/Index/getList', (res = {}) => {
 
 ## 3. Rest 解构赋值
 
-截止我写这篇文章的时候，小程序官方的组件标准仍然没有出来。
+直到写这篇文章的时候，小程序官方的组件标准也仍然没有出来。
 
-通常方案是，通过 `template` 配合解构赋值不同对象的数据，实现组件各自状态独立的效果。
+目前的通常处理方案，一般是通过 `template` 配合解构赋值不同对象的数据，实现组件各自状态、事件处理函数互相独立的效果。
+
+如，有两个 `template` 都从 `data` 中绑定数据。
+
+```html
+<template name="banner">
+    <view class="banner-wrap">
+        <view wx:for="{{data}}" class="banner-item">
+        <!--...-->
+        </view>
+    </view>
+</template>
+<template name="comic-list">
+    <view class="comic-list">
+        <view wx:for="{{data}}" class="comic-item">
+        <!--...-->
+        </view>
+    </view>
+</template>
+```
+
+`AppService` 中对于这两个模板创建两个不同对象，即可管理自身状态，不用担心字段名重复的问题。
+
+```javascript
+Page({
+    onLoad: function () {
+        // 加载 Banner 数据并显示
+        this.loadData('/bannerState/get', (data) => {
+            this.setData({
+                bannerState: data
+            });
+        });
+        // 加载 ComicList 数据并显示
+        this.loadData('/comicListState/get', (data) => {
+            this.setData({
+                comicListState: data
+            });
+        });
+    },
+    loadData: function (url, callback) {
+        var data = [];
+        /* 从 url 加载数据的逻辑 */
+        setTimeout(() => {
+            callback({
+                data: data
+            });
+        }, 100);
+    }
+});
+```
+
+页面内渲染模板时，对 `bannerState` 和 `comicListState` 字段进行解构即可。
+
+```html
+<template is="banner" data="{{...bannerState}}"/>
+<template is="comicList" data="{{...comicListState}}"/>
+```
 
 ## 4. 增强的对象字面量
 
-* `setData()` 中的字段名
+### `setData()` 
 
-* 为成员添加方法
+`setData()` 中的数据字段名与变量名一致时，不需要重复写两遍，上面加载数据的代码就可以这样简写：
+
+```javascript
+        this.loadData('/bannerState/get', (bannerState) => {
+            this.setData({
+                bannerState
+            });
+        });
+```
+
+数据字段较多时，效率会快很多。减少了整理和重构代码需要调整的地方，降低维护成本。
+
+```javascript
+// 传统对象字面量
+this.setData({
+    data1: data1,
+    data2: data2,
+    data3: data3,
+    data4: data4,
+    data5: data5
+});
+
+// 增强的对象字面量
+this.setData({data1, data2, data3, data4, data5});
+```
+
+### 成员方法
+
+增强的对象字面量写法，还包括函数的简写：
+
+```javascript
+// 传统的对象字面量
+var comicState = {
+    onTap: function (e) {
+        // ...
+    },
+    onScroll: function (e) {
+        // ...
+    }
+};
+
+// 增强的对象字面量
+var comicState = {
+    onTap(e) {
+        // ...
+    },
+    onScroll(e) {
+        // ...
+    }
+};
+```
+
+这种简洁的成员函数写法，是不是很像 `class` 中的函数声明？
+
+```javascript
+class ComicState {
+    onTap (e) {
+        // ...
+    }
+    onScroll (e) {
+        // ...
+    }
+}
+```
 
 ## 5. Class 与继承
+
+使用 `ES5` 的 `prototype` 写法，实现简单的类继承也没太大问题，但涉及到父类函数调用等情况，代码耦合度会变得更高，需要一定经验才能写出方便维护的代码。
+
+通过 `ES6` 语法来实现类继承的话，有了统一的标准，写出的类继承更加直观，更方便调整。
 
 ```javascript
 class Base {
@@ -118,7 +241,7 @@ class Base {
     }
 }
 
-class ChildType {
+class ChildType extends Base {
     constructor (options) {
         super(options, ChildType);
         // Do something.
@@ -126,14 +249,28 @@ class ChildType {
 }
 ```
 
-## 6. 其它
+## 6. 块作用域变量
 
-字符串模板、`let` 与 `const`。
+使用 `for` 对数据做迭代遍历时，语句中声明的 `var` 型变量名作用域其实提升到了函数顶部，不同迭代间忘记处理的话，可能会导致数据污染。
+
+改为使用 `ES6` 的 `let`/`const` 可避免这一情况，放心使用块级作用域。
+
+```javascript
+for (let k in data1) {
+    // ...
+}
+// ...
+let k = 0;
+// ...
+for (let k in data2) {
+    // ...
+}
+```
 
 ## 补充：
 
 微信小程序使用的 `babel` 启用的转码规则可能不是最新的，截止目前版本，测试使用以下 `ES6` 会有问题，需要注意。
 
-* Class 内部的字段；
-* for...in 语法遍历对象；
+* `class` 内部声明的静态字段；
+* `for...in` 语法遍历对象（直接使用了 `Iterator`，移动端可能尚未实现）；
 * 对象字面量中，函数间逗号问题；
