@@ -2,7 +2,7 @@ mixin toc(page)
   aside#toc.toc-wrap
     h3.toc-title 目录
     div.toc-tree
-      != toc(page.content, {list_number: true})
+      != toc(page.content, {list_number: false})
   style(type='text/css').
     .toc-wrap {
         float: right;
