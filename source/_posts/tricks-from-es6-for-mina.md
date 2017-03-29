@@ -291,7 +291,7 @@ class TestClass {
 console.log(TestClass.MODE.NORMAL);
 ```
 
-* ~~`for...in` 语法遍历对象（直接使用了 `Symbol.iterator`，移动端可能尚未实现）；~~ 
+* ~~`for...of` 语法遍历对象（直接使用了 `Symbol.iterator`，移动端可能尚未实现）；~~ 
 
 > 20170329 更新：新版本开发工具似乎已经完善了这个问题，可以使用下面的 `ES6` 写法了：
 
@@ -317,4 +317,18 @@ for (var k in o) {
 for (let k of Object.keys(o)) {
     console.log(o[k]);
 }   // 输出：1 2
+```
+
+`for...of` 用于数组遍历时，效果与 `Array.prototype.forEach` 类似，区别是可以在途中 `break` 中断循环，无需每次遍历整个数组。
+
+```javascript
+// Array.prototype.forEach
+comicList.forEach((c) => {
+    // ...
+});
+
+// for...of
+for (let c of comicList) {
+    // ...
+}
 ```
