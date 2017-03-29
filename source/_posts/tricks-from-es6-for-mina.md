@@ -277,5 +277,44 @@ for (let k in data2) {
 微信小程序使用的 `babel` 启用的转码规则可能不是最新的，截止目前版本，测试使用以下 `ES6` 会有问题，需要注意。
 
 * `class` 内部声明的静态字段；
-* `for...in` 语法遍历对象（直接使用了 `Iterator`，移动端可能尚未实现）；
-* 对象字面量中，函数间逗号问题；
+
+```javascript
+// 以下代码在 babel 的 repl 中能正常处理，在小程序开发工具内会报错
+class TestClass {
+    static MODE = {
+        NORMAL: 1,
+        DISABLED: -1
+    }
+}
+
+// 输出：1
+console.log(TestClass.MODE.NORMAL);
+```
+
+* ~~`for...in` 语法遍历对象（直接使用了 `Symbol.iterator`，移动端可能尚未实现）；~~ 
+
+> 20170329 更新：新版本开发工具似乎已经完善了这个问题，可以使用下面的 `ES6` 写法了：
+
+```javascript
+function Test() {
+    this.a = 1;
+    this.b = 2;
+}
+Test.prototype = {
+    c: 3
+};
+
+var o = new Test();
+
+// ES5
+for (var k in o) {
+    if (k.hasOwnProperty(k)) {
+        console.log(o[k]);
+    }
+}   // 输出：1 2
+
+// ES6
+for (let k of Object.keys(o)) {
+    console.log(o[k]);
+}   // 输出：1 2
+```
