@@ -18,6 +18,8 @@ toc: true
 
 那么，新同学们掌握网页重构后，又该开始哪些知识的学习？以便向前端开发进阶，拓展自己的技能树、全面发展呢？
 
+个人认为主要需要学习的都是各类 JS 知识点。这里对相关知识点稍作整理归类，可能分几篇文章各自小结一下，希望能抛砖引玉，对新人们的学习有所帮助。
+
 <!-- more -->
 
 # DOM 操作
@@ -51,12 +53,14 @@ toc: true
 </p>
 <script>
     setInterval(function () {
-        document.getElementById('txt_now').innerText = new Date();
+        document.getElementById('txt_now').textContent = new Date();
     }, 1000);
 </script>
 ```
 
-根据 `id` 找到
+根据 `id` 找到占位的 `span` 标签对应 DOM 后，修改 DOM 的 `textContent` 属性，浏览器自动反馈到页面更新，就完成了修改页面内容的常见操作。
+
+在这里还涉及到 `textContent` 的兼容性问题，以及与 `innerText`、`innerHTML` 的区别问题，想要详细学习的话可以参考：[《JS魔法堂：被玩坏的innerHTML、innerText、textContent和value属性》](http://www.cnblogs.com/fsjohnhuang/p/4319635.html)。
 
 ### 2.2 修改样式
 
