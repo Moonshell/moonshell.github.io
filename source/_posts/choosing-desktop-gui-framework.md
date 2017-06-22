@@ -11,7 +11,7 @@ toc: true
 
 > 说到 `node.js` 的 GUI 开发方案，首先想到的就是 `electron` 和 `nw.js`。但除了它们之外，是否存在其它更轻量级的技术方案可供选择呢？
 
-{% img "/images/choosing-desktop-gui-framework/node-gui.png" cover %}
+![node-gui](/images/choosing-desktop-gui-framework/node-gui.png)
 
 <!-- more -->
 
