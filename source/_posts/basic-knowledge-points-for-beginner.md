@@ -154,6 +154,8 @@ toc: true
 
 而且，在父元素内已有大量子元素时，需要在子元素内删除成员或插入新成员时，直接修改父元素的 `innerHTML` 会导致所有子元素重新渲染，性能开销大。
 
+> `list.innerHTML += newElements;` 本质上其实是 `var newHTML = list.innerHTML + newElements; list.innerHTML = newHTML;` 依然渲染了整个列表，而非追加元素。
+
 而且重新渲染创建的子元素与之前的子元素并非同一实例，会丢失之前对子元素绑定的事件监听器，导致各种意外情况，需要注意。
 
 ## 3. 属性 (Property) 与特性 (Attribute)
