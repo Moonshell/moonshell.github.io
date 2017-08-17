@@ -11,7 +11,9 @@ toc: true
 
 # 事件与事件对象
 
-## 1. 从最初的“点击”开始
+## 事件与 DOM
+
+### 1. 从最初的“点击”开始
 
 > “点击这个按键时，XXX 变成 YYY，然后……”
 
@@ -33,7 +35,7 @@ toc: true
 </script>
 ```
 
-## 2. 新的处理方式
+### 2. 新的处理方式
 
 网上古老的 JS 入门教程可能都是这么写的。
 不过，二十年来业务不断进化，这样的处理方式虽然还被浏览器所支持，但暴露出越来越多问题，已经不再建议使用了。
@@ -68,7 +70,7 @@ W3C 标准推荐使用 DOM 对象的 `addEventListener` 和 `removeEventListener
 </script>
 ```
 
-## 3. DOM 对象与 jQuery 对象
+### 3. DOM 对象与 jQuery 对象
 
 上面 jQuery 的代码和之前的原生 JS 代码等效，但有一点需要注意，也是新手经常混淆的。
 
@@ -81,13 +83,47 @@ W3C 标准推荐使用 DOM 对象的 `addEventListener` 和 `removeEventListener
     $('#txt_info').text(new Date());            // √ - 有效
 ```
 
-它其实是一个特殊数组，里面存放着传入 CSS 选择器所对应的所有 DOM 对象，通过 `.length` 可以查看其中选中的元素数量：
+它其实是一个特殊数组，里面存放着传入 CSS 选择器所对应的所有 DOM 对象，通过 `.length` 可以查看其中选中的元素数量，通过数组下标可以取出其中的原生 DOM 对象：
 
 ```javascript
-    $('#text_info').length;         // => 1
+    $('#text_info').length;                     // => 1
+    $('#text_info')[0] === 
+        document.getElementById('text_info');   // => true
 ```
 
+当 jQuery 选择了多个元素时，各类 API 操作可以对立面所有成员进行处理，非常方便：
 
+```javascript
+    $('blockquote').prepend('<span>“</span>');  // 所有 blockquote 元素内容前插入 “ 符号
+```
+
+### 4. 常用 jQuery API
+
+* 选择元素和创建元素使用 `$()`, `find`, `filter`
+* 处理事件使用 `on`, `off`, `trigger`
+* 操作元素内容使用 `text`, `html`
+* 操作元素属性/特性使用 `prop`, `attr`, `removeProp`, `removeAttr`
+* 操作元素样式/`className` 时使用 `css`, `addClass`, `removeClass`, `toggleClass`, `hasClass`
+* 父元素插入/追加/移除子元素使用 `prepend`, `append`
+* 子元素附近插入/查找邻近元素使用 `prev`, `next`, `prevAll`, `nextAll`
+* 子元素移除时使用 `remove`
+* 查找父元素/祖先元素使用 `parent`, `parents`
+
+掌握上述常用 API 的使用方法和对应场景后，基本就可以实现 90% 以上的日常业务需求了。
+
+## 事件对象 `e`
+
+由于原生 DOM API 写起来太过繁琐，以及兼容性的处理太过复杂，这里推荐使用 jQuery 等现成框架，业余时间再对常见的兼容性进行了解，以便遇到意外时知道问题出在何处。
+
+当我们对页面元素绑定了事件处理器后，常常会看到一个神秘的 `e` 参数：
+
+```javascript
+    $('#btn_update').on('click', function (e) {
+        // Todo: ...
+    });
+```
+
+它就是所谓的“事件对象”了，不过上面的例子里似乎并没有用上它啊？它到底有什么作用呢？
 
 <!--
 
