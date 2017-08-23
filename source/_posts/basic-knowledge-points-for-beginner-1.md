@@ -131,27 +131,88 @@ W3C 标准推荐使用 DOM 对象的 `addEventListener` 和 `removeEventListener
 
 此外，事件对象 `e` 还提供了一些 API 可以对这次事件进行一些附加操作，下面进行具体说明。
 
-### 例子：判断点击位置
+### 例子：幻灯片切换效果（点击位置判断）
 
-## 事件冒泡与捕获
+过去对于用户点击图片区域判断，需要通过 img 元素的 usemap 属性实现，使用方式较为复杂，且限制较多，可复用性低。
+
+现在，实现一个简单的幻灯片点击切换效果，只需根据事件对象中相关参数来判断即可。
+
+大致效果是：用户点击左右两侧 20% 区域时，切换展示上/下一章图片；点击中间区域不处理。
+
+```html
+<!DOCTYPE html>
+<style>
+    .pic-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .pic-item {
+        display: none;
+    }
+    .pic-item.current {
+        display: block;
+    }
+    .pic-item img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<ul class="pic-list">
+    <li class="pic-item current">
+        <img src="images/1.jpg"/>
+    </li>
+    <li class="pic-item">
+        <img src="images/2.jpg"/>
+    </li>
+    <li class="pic-item">
+        <img src="images/3.jpg"/>
+    </li>
+</ul>
+```
+
+只需要对列表元素绑定点击事件，然后根据点击位置和列表宽度，就能判断出用户点击的区域，然后做样式切换即可：
+
+```javascript
+// 1. 选择 .pic-list 元素，绑定 click 事件监听器
+$('.pic-list').on('click', function (e) {
+    var $list = $(this),
+        $item = $list.find('.pic-item'),
+        itemCount = $item.length;
+        
+    // 2. 获取点击坐标，列表元素坐标和列表宽度
+    var clickPos = { left: e.pageX, top: e.pageY },
+        listPos = $list.offset(),
+        listWidth = $list.width();
+        
+    // 3. 点击坐标 - 列表坐标，再除以列表宽度，即可得到点击相对列表的横向位置百分比
+    var px = (clickPos.left - listPos.left) / listWidth;
+    
+    // 4. 根据点击是否 0%~20%, 80%~100% 处理上下页切换
+    var curIndex = $item.filter('.current').index();    // 当前序号
+    if (px < .2) {
+        curIndex = (curIndex + itemCount - 1) % itemCount;
+    } else if (px >= .8) {
+        curIndex = (curIndex + 1) % itemCount;
+    }
+    
+    // 5. 切换当前显示的子元素
+    $item.removeClass('current').eq(curIndex).addClass('current');
+});
+```
+
+上述代码用原生 JS 写会复杂很多，因为需要离开 jQuery 编写兼容 IE8 的代码，需要对事件绑定、事件对象获取、元素查找、点击坐标、元素坐标等操作做大量兼容处理。做兼容处理的代码甚至会比主要逻辑代码还要多得多。
+
+有兴趣的同学课余可以尝试一下，使用原生 JS 兼容 IE8 和现代浏览器后，再对比上述代码，就能明白 jQuery 的强大之处了~
+
 
 <!--
 
-# 事件与事件对象
-
-## 1. 什么是事件
-
-## 2. 处理事件
-
-### 事件属性
-
-### 事件监听器
-
-## 3. 事件冒泡与捕获
-
-## 4. 事件对象
-
-## 5. 事件代理
+## 事件冒泡与事件代理
 
 # MVVM
 
