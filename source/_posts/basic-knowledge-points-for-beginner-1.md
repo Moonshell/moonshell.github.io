@@ -9,6 +9,10 @@ tags:
 toc: true
 ---
 
+> 相关文章：
+>
+> [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/05/04/basic-knowledge-points-for-beginner/)
+
 # 事件与事件对象
 
 ## 事件与 DOM
@@ -102,6 +106,7 @@ W3C 标准推荐使用 DOM 对象的 `addEventListener` 和 `removeEventListener
 * 选择元素和创建元素使用 `$()`, `find`, `filter`
 * 处理事件使用 `on`, `off`, `trigger`
 * 操作元素内容使用 `text`, `html`
+* 操作元素位置和尺寸使用 `offset`, `width`, `height`
 * 操作元素属性/特性使用 `prop`, `attr`, `removeProp`, `removeAttr`
 * 操作元素样式/`className` 时使用 `css`, `addClass`, `removeClass`, `toggleClass`, `hasClass`
 * 父元素插入/追加/移除子元素使用 `prepend`, `append`
@@ -209,6 +214,15 @@ $('.pic-list').on('click', function (e) {
 
 有兴趣的同学课余可以尝试一下，使用原生 JS 兼容 IE8 和现代浏览器后，再对比上述代码，就能明白 jQuery 的强大之处了~
 
+### 附：可用的跨浏览器兼容的 jQuery 标准化事件属性
+
+jQuery 按照 W3C 标准规范，将不同浏览器的事件对象处理成了同一格式，免去了日常业务层反复做浏览器兼容的繁琐工作。
+
+大部分属性只需要参考 W3C 规范即可，各属性具体说明可阅读 jQuery 的 API 文档进行了解：
+
+>官方文档：[jQuery | Event Object](http://api.jquery.com/category/events/event-object/)
+>
+>中文文档：[jQuery | 事件对象](http://www.jquery123.com/category/events/event-object/)
 
 <!--
 
