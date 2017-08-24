@@ -9,6 +9,10 @@ tags:
 toc: true
 ---
 
+掌握 DOM 的基本概念后，这次我们讲讲浏览器的事件和事件对象。再结合具体业务需求，通过例子展示事件相关的操作方法。
+
+<!-- more -->
+
 > 相关文章：
 >
 > [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/05/04/basic-knowledge-points-for-beginner/)
