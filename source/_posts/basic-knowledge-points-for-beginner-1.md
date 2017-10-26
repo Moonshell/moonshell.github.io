@@ -15,7 +15,7 @@ toc: true
 
 > 相关文章：
 >
-> [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/05/04/basic-knowledge-points-for-beginner/)
+> [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/10/20/basic-knowledge-points-for-beginner/)
 
 # 事件与事件对象
 
