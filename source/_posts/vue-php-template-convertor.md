@@ -1,6 +1,6 @@
 ---
 title: 探索PHP与Vue通用直出模板方案
-date: 2017-02-16 00:00:00
+date: 2017-02-13 00:00:00
 categories: [前端]
 tags: [Vue, php, 模板, 直出, SSR]
 toc: true
