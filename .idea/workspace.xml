@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5247c882-b7d3-46ae-a380-48c162cf439b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-1.md" afterPath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-1.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-2.md" afterPath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-2.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner.md" afterPath="$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/choosing-desktop-gui-framework.md" afterPath="$PROJECT_DIR$/source/_posts/choosing-desktop-gui-framework.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/tricks-from-es6-for-mina.md" afterPath="$PROJECT_DIR$/source/_posts/tricks-from-es6-for-mina.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/source/_posts/vue-php-template-convertor.md" afterPath="$PROJECT_DIR$/source/_posts/vue-php-template-convertor.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -56,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-1.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="224">
+              <first_editor relative-caret-position="225">
                 <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
                 <folding>
                   <marker date="1509079398000" expanded="true" signature="537:662" ph="..." />
@@ -312,15 +307,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1509076600589</updated>
-      <workItem from="1509076601656" duration="1295000" />
+      <workItem from="1509076601656" duration="1418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1295000" />
+    <option name="totallyTimeSpent" value="1418000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="306" y="188" width="1903" height="1176" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960588" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -329,7 +325,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -502,7 +498,7 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/basic-knowledge-points-for-beginner-1.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="224">
+          <first_editor relative-caret-position="225">
             <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
             <folding>
               <marker date="1509079398000" expanded="true" signature="537:662" ph="..." />

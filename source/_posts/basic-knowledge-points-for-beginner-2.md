@@ -1,8 +1,7 @@
 ---
 title: 由重构进阶前端开发入门 (三) 事件冒泡与事件代理
 date: 2017-10-26 00:00:00
-categories:
-- 前端
+categories: [前端]
 tags: [前端, 初学者, 事件, 冒泡, 代理]
 toc: true
 ---

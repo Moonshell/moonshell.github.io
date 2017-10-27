@@ -1,8 +1,7 @@
 ---
 title: 在你开发微信小程序时能用上的那些ES6特性
 date: 2017-03-29 00:00:00
-categories:
-- 小程序
+categories: [小程序]
 tags: [微信小程序, ES6]
 toc: true
 ---

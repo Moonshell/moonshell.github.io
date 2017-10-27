@@ -1,8 +1,7 @@
 ---
 title: 由重构进阶前端开发入门 (一) DOM 操作
 date: 2017-05-04 00:00:00
-categories:
-- 前端
+categories: [前端]
 tags: [前端, 初学者, DOM]
 toc: true
 ---
@@ -164,11 +163,11 @@ toc: true
 
 `Property` 则是脚本内获取到的 DOM 对象附带的字段属性，如 `id`、`innerHTML` 等。
 
-|字段     |是否属性  |是否特性  |
-|:--------|:--------|:--------|
-|id       |√        |√        |
-|innerHTML|√        |×        |
-|data-xxxx|×        |√        |
+| 字段        | 是否属性 | 是否特性 |
+| :-------- | :--- | :--- |
+| id        | √    | √    |
+| innerHTML | √    | ×    |
+| data-xxxx | ×    | √    |
 
 操作 `Attribute` 的标准方法是调用 DOM 的 `getAttribute(key)` 和 `setAttribute(key, value)`，其中 `getAttribute` 的返回值和 `setAttribute` 第二个参数 `value` 都必需是字符串类型。
 
