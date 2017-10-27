@@ -1,14 +1,9 @@
 ---
 title: 由重构进阶前端开发入门 (三) 事件冒泡与事件代理
+date: 2017-10-26 00:00:00
 categories:
 - 前端
-tags:
-- 前端
-- 初学者
-- 事件
-- 冒泡
-- 代理
-- 委托
+tags: [前端, 初学者, 事件, 冒泡, 代理]
 toc: true
 ---
 
@@ -18,8 +13,8 @@ toc: true
 
 > 相关文章：
 >
-> [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/10/20/basic-knowledge-points-for-beginner/)
-> [由重构进阶前端开发入门 (二) 事件与事件对象](http://blog.krimeshu.com/2017/10/20/basic-knowledge-points-for-beginner-1/)
+> {% post_link basic-knowledge-points-for-beginner %}
+> {% post_link basic-knowledge-points-for-beginner-1 %}
 
 # (三) 事件冒泡与事件代理
 

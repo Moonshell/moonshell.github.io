@@ -1,11 +1,9 @@
 ---
 title: 由重构进阶前端开发入门 (二) 事件与事件对象
+date: 2017-06-29 00:00:00
 categories:
 - 前端
-tags:
-- 前端
-- 初学者
-- 事件
+tags: [前端, 初学者, 事件]
 toc: true
 ---
 
@@ -15,7 +13,7 @@ toc: true
 
 > 相关文章：
 >
-> [由重构进阶前端开发入门 (一) DOM 操作](http://blog.krimeshu.com/2017/10/20/basic-knowledge-points-for-beginner/)
+> {% post_link basic-knowledge-points-for-beginner %}
 
 # 事件与事件对象
 

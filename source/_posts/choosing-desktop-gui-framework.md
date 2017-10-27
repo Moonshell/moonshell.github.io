@@ -1,11 +1,9 @@
 ---
 title: 那些你不知道的 node.js 桌面应用开发框架
+date: 2017-06-22 00:00:00
 categories:
 - node.js
-tags:
-- node.js
-- 桌面应用
-- 感想
+tags: [node.js, 桌面应用, 感想]
 toc: true
 ---
 

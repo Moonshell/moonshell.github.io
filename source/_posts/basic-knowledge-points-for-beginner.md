@@ -1,11 +1,9 @@
 ---
 title: 由重构进阶前端开发入门 (一) DOM 操作
+date: 2017-05-04 00:00:00
 categories:
 - 前端
-tags:
-- 前端
-- 初学者
-- DOM
+tags: [前端, 初学者, DOM]
 toc: true
 ---
 
