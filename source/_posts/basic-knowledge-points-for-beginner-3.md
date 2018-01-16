@@ -56,12 +56,12 @@ $('body').append($toastX);
 
 ```javascript
 function showToast(msg) {
-  var $toast1 = $('<p class="toast-msg"></p>')
+  var $toast = $('<p class="toast-msg"></p>')
                   .text(msg)
                   .on('click', function () {
                     $(this).remove();
                   });
-  $('body').append($toast1);
+  $('body').append($toast);
 }
 
 showToast('登陆成功！');
@@ -79,4 +79,6 @@ showToast('评论发送失败！');
 
 上面的思想概括起来，其实就是对处理一类事情的过程以函数的形式复用。
 
-是一种相对初级的复用思想，随着业务逻辑逐渐复杂，
+是一种相对初级的复用思想，随着业务逻辑逐渐复杂，这种办法的效果也越来越弱。
+
+具体表现就是，打开一个 js 文件，虽然其中没什么重复代码，但却有着几十上百个函数，理不清其中的顺序和关系，可读性很难把控。
