@@ -30,43 +30,45 @@ JavaScript 是一门编程语言，和其它计算机语言一样，在你编码
 
 ## 函数复用、公用库
 
-例如，在页面某处有一个弹出 Toast 的逻辑，写下了这样的代码：
+例如，在页面某处有一个弹出 Dialog 的逻辑，写下了这样的代码：
 
 ```javascript
-var $toast1 = $('<p class="toast-msg"></p>')
+var $dialog1 = $('<p class="dialog-msg"></p>')
                 .text('登陆成功！')
-                .on('click', function () {
+                .on('click','[close-dialog]', function () {
                   $(this).remove();
                 });
-$('body').append($toast1);
+$('body').append($dialog1);
 ```
 
 之后又增加了一个类似的 Toast 消息：
 
 ```javascript
-var $toastX = $('<p class="toast-msg"></p>')
+var $dialog2 = $('<p class="dialog-msg"></p>')
                 .text('评论发送失败！')
-                .on('click', function () {
+                .on('click', '[close-dialog]', function () {
                   $(this).remove();
                 });
-$('body').append($toastX);
+$('body').append($dialog2);
 ```
 
-可以看出几乎所有逻辑都是相同的，区别只在于提示语。这个时候已经没必要再重复，可以提取出一个共用的函数：
+这段代码与上面那段几乎所是相同的，区别只在于提示语。
+
+明显没必要这样重复，可以提取出一个共用的函数：
 
 ```javascript
-function showToast(msg) {
-  var $toast = $('<p class="toast-msg"></p>')
+function showDialog(msg) {
+  var $dialog = $('<p class="dialog-msg"></p>')
                   .text(msg)
-                  .on('click', function () {
+                  .on('click', '[close-dialog]', function () {
                     $(this).remove();
                   });
-  $('body').append($toast);
+  $('body').append($dialog);
 }
 
-showToast('登陆成功！');
+showDialog('登陆成功！');
 
-showToast('评论发送失败！');
+showDialog('评论发送失败！');
 ```
 
 提取**共用函数**可以说是最基本的编程思想了。
@@ -77,8 +79,21 @@ showToast('评论发送失败！');
 
 ## 抽象成对象/类
 
-上面的思想概括起来，其实就是对处理一类事情的过程以函数的形式复用。
+上面的思想概括起来，其实就是将处理一类事务的过程，以函数的形式复用。
 
 是一种相对初级的复用思想，随着业务逻辑逐渐复杂，这种办法的效果也越来越弱。
 
-具体表现就是，打开一个 js 文件，虽然其中没什么重复代码，但却有着几十上百个函数，理不清其中的顺序和关系，可读性很难把控。
+结果就是，这样写出来的 js 文件，到达一定规模之后，其中虽然没什么重复代码，但却有着几十上百个函数。阅读者理清其中的顺序和关系会很耗时，难以保证可读性。
+
+而且函数形式的复用，并不能很好的处理带属性、状态一类的情况。
+
+比如上面的对话框函数，如果要给对话框增加拖动的处理函数，还要在记录坐标、层级、打开状态等等属性时，需要手动从外部传入很多变量来处理。
+
+导致原本是对话框相关的逻辑和数据，却被分散到了文件内的不同地方，需要做属性增减时很难集中调整。
+
+继续增加函数形式的控制逻辑，也容易与其他函数混在一起。项目合作的同事稍不注意，就容易插入其他函数把它们打散。
+
+最后赶出来的项目或许能正常运行，但内部代码却是互相穿插、混乱不堪的**意大利面条代码**，几乎无法维护。
+
+所以计算机软件工程的前人们，探索出了**面向对象**的编程思想。
+
