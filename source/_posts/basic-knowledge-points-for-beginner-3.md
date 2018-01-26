@@ -39,22 +39,31 @@ JavaScript 是一门编程语言，和其它计算机语言一样，在你编码
 例如，在页面某处有一个弹出 Dialog 的逻辑，写下了这样的代码：
 
 ```javascript
-var $dialog1 = $('<p class="dialog-msg"></p>')
+var $dialog1 = $('<div class="dialog-box">' + 
+                 '  <p class="dialog-msg"></p>' +
+                 '  <a class="dialog-btn" close-dialog>确定</a>' + 
+                 '</div>')
                 .text('登陆成功！')
                 .on('click','[close-dialog]', function () {
-                  $(this).remove();
-                });
+                  $(this).closest('.dialog-box').hide();
+                })
+                .find('.dialog-msg')
+                .text('评论发送失败！');
 $('body').append($dialog1);
 ```
 
 之后又增加了一个类似的 Toast 消息：
 
 ```javascript
-var $dialog2 = $('<p class="dialog-msg"></p>')
-                .text('评论发送失败！')
+var $dialog2 = $('<div class="dialog-box">' + 
+                 '  <p class="dialog-msg"></p>' +
+                 '  <a class="dialog-btn" close-dialog>确定</a>' + 
+                 '</div>')
                 .on('click', '[close-dialog]', function () {
-                  $(this).remove();
-                });
+                  $(this).closest('.dialog-box').hide();
+                })
+                .find('.dialog-msg')
+                .text('评论发送失败！');
 $('body').append($dialog2);
 ```
 
@@ -64,11 +73,15 @@ $('body').append($dialog2);
 
 ```javascript
 function showDialog(msg) {
-  var $dialog = $('<p class="dialog-msg"></p>')
-                  .text(msg)
+  var $dialog = $('<div class="dialog-box">' + 
+                  '  <p class="dialog-msg"></p>' +
+                  '  <a class="dialog-btn" close-dialog>确定</a>' + 
+                  '</div>')
                   .on('click', '[close-dialog]', function () {
-                    $(this).remove();
-                  });
+                    $(this).closest('.dialog-box').hide();
+                  })
+                  .find('.dialog-msg')
+                  .text(msg);
   $('body').append($dialog);
 }
 
@@ -133,17 +146,67 @@ showDialog('评论发送失败！');
 ```javascript
 // 对话框类的构造函数
 function Dialog(options) {
-  // 创建对话框时，调用这个对话框自身的某个函数
-  this.initialize(options);
+  var self = this;
+  // 创建相应 dom，记录到当前构建的对象内
+  this.$dom = $('<div class="dialog-box">' + 
+                '  <p class="dialog-msg"></p>' +
+                '  <a class="dialog-btn" close-dialog>确定</a>' + 
+                '</div>')
+                .on('click', '[close-dialog]', function () {
+                  self.hide();
+                });
+  $('body').append(this.$dom);
 }
 
-// 对话框具有的方法
+// 对话框的可用方法
 Dialog.prototype = {
-  // 初始化对话框
-  initialize: function (options) {
-    // Todo: ...
+  // 记录构造函数
+  constructor: Dialog,
+  // 设置内容
+  setContent: function (content) {
+    this.$dom.find('.dialog-msg').text(content);
+  },
+  // 展示对话框
+  show: function () {
+    this.$dom.show();
+  },
+  // 收起对话框
+  hide: function () {
+    this.$dom.hide();
   }
 };
 ```
 
+首先声明对话框类 **Dialog** 的构造函数，之后每个对话框都将通过这个函数构建出具体的实例。
+
+其中通过操作 **this**，可以使所有对话框都有 DOM 对象可供操作，且互相独立不受干扰（比如对话框1和对话框2都具有 **$dom** 的属性，修改对话框1的 **$dom** 时，对话框2的 **$dom** 不会受到任何影响，反之亦然）。
+
+然后，增加了几个 **Dialog** 原型函数 **show, hide, destroy**。这几个函数被称为类的**方法**。
+
+所有对话框都可以调用这些方法，与构造函数一样，其中也可以操作 **this** 来达成不同实例互不干扰的效果。
+
 ### 对话框实例
+
+完成了最基本的可复用对话框类的创建，只需要通过 new 就可以实例化后使用了。
+
+```javascript
+// 创建对话框1
+var dialog1 = new Dialog();
+// 设置其内容
+dialog1.setContent('登陆成功！');
+// 展示对话框1
+dialog1.show();
+
+// 创建对话框2
+var dialog2 = new Dialog();
+// 设置其内容（不影响对话框1）
+dialog2.setContent('评论发送失败！');
+// 展示对话框2
+dialog2.show();
+// 3秒后自动收起（同样不影响对话框1）
+setTimeout(function () {
+  dialog2.hide();
+}, 3000);
+```
+
+与 **showDialog** 函数相比，这样写有什么优势呢？
