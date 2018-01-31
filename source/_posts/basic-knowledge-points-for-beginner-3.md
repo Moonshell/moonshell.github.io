@@ -1,6 +1,6 @@
 ---
-title: 由重构进阶前端开发入门 (四) 面向对象（上）
-date: 2018-1-4 00:00:00
+title: 由重构进阶前端开发入门 (四) 面向对象
+date: 2018-1-31 00:00:00
 categories: [前端]
 tags: [前端, 初学者, 面向对象]
 toc: true
@@ -13,7 +13,9 @@ toc: true
 > 相关文章：
 >
 > {% post_link basic-knowledge-points-for-beginner %}
+>
 > {% post_link basic-knowledge-points-for-beginner-1 %}
+>
 > {% post_link basic-knowledge-points-for-beginner-2 %}
 
 # (四) 面向对象
