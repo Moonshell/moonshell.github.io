@@ -45,12 +45,11 @@ var $dialog1 = $('<div class="dialog-box">' +
                  '  <p class="dialog-msg"></p>' +
                  '  <a class="dialog-btn" close-dialog>确定</a>' + 
                  '</div>')
-                .text('登陆成功！')
                 .on('click','[close-dialog]', function () {
                   $(this).closest('.dialog-box').hide();
                 })
                 .find('.dialog-msg')
-                .text('评论发送失败！');
+                .text('登陆成功！');
 $('body').append($dialog1);
 ```
 
