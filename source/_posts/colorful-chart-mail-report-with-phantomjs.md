@@ -54,11 +54,11 @@ document.querySelectorAll('canvas')
 
 基本思路出来了，那么如何把它运用在我们生成报表邮件的服务器上呢？
 
-使用 PHPMailer 和 nodemailer 等组件发送邮件时，都是提供一个本地路径作为附件参数。组件发送邮件时从本地文件中读取并发送。
+使用 **PHPMailer** 和 **nodemailer** 等组件发送邮件时，都是提供一个本地路径作为附件参数。组件发送邮件时从本地文件中读取并发送。
 
-所以我们对图表的截图需要保存在本地，这里不方便通过页面内部脚本实现，我们可以借助 phantomJS 的截图 API。
+所以我们对图表的截图需要保存在本地，这里不方便通过页面内部脚本实现，我们可以借助 **phantomJS** 的截图 API。
 
-phantomJS 脚本中可以这样写：
+**phantomJS** 脚本中可以这样写：
 
 ```javascript
 var fs = require('fs');
@@ -170,3 +170,5 @@ function tailInWorkAndSaveHtml() {
     fs.write(filePath, fileContent, 'w');
 }
 ```
+
+完成上述工作后，只需要将 **data-mail.html** 作为邮件内容，**data-mail-attach-image.list** 内的图片作为附件，调用 **PHPMailer/nodemailer** 发送邮件即可。
