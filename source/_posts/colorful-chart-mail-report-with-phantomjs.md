@@ -1,6 +1,6 @@
 ---
 title: 用 PhantomJS 让邮件报表图文并茂（一）
-date: 2018-3-28 00:00:00
+date: 2018-4-8 00:00:00
 categories: [前端]
 tags: [前端, PhantomJS, 邮件]
 toc: true
@@ -8,9 +8,9 @@ toc: true
 
 在部门日常业务中，每天都会产生各种各样的数据。为了让抽象的数据，更加调理方便人阅读，就需要将数据整理成表格、图表等形式，以更生动的面貌展示在人们眼前。
 
-通常 Web 端可以采用 ECharts 等方案来实现丰富的图表效果，但报表邮件由于各种邮件客户端环境的关系，虽然是使用 HTML 编写邮件内容，可用的样式、布局都有会诸多限制，甚至不允许执行 JavaScript 脚本。
+通常 **Web** 端可以采用 **ECharts** 等方案来实现丰富的图表效果，但报表邮件由于各种邮件客户端环境的关系，虽然是使用 **HTML** 编写邮件内容，可用的样式、布局都有会诸多限制，甚至不允许执行 **JavaScript** 脚本。
 
-传统报表邮件中，只能以简单的 table 表格来展示数据，一但数据维度增加、业务日渐复杂，报表邮件将变得越来越冗杂、难以理解。
+传统报表邮件中，只能以简单的 **table** 表格来展示数据，一但数据维度增加、业务日渐复杂，报表邮件将变得越来越冗杂、难以理解。
 
 那么有没有什么办法，让邮件也能实现图文并茂的图表呢？
 
@@ -50,7 +50,7 @@ document.querySelectorAll('canvas')
 
 所以一些关键数据，需要改为默认显示，不需要通过交互触发，以便脚本截图时能截取到。
 
-## 自动化任务实现
+## phantomJS 脚本实现
 
 基本思路出来了，那么如何把它运用在我们生成报表邮件的服务器上呢？
 
@@ -171,4 +171,45 @@ function tailInWorkAndSaveHtml() {
 }
 ```
 
-完成上述工作后，只需要将 **data-mail.html** 作为邮件内容，**data-mail-attach-image.list** 内的图片作为附件，调用 **PHPMailer/nodemailer** 发送邮件即可。
+跑完整个流程的逻辑的入口：
+
+```javascript
+function exit() {
+    console.log('Mail render done.');
+    phantom.exit();
+}
+
+// 开始工作
+(function work() {
+    // 从参数中取需要处理的页面路径
+    var filePath = fs.absolute(outputDir + '/' + system.args[1]);
+
+    page.open(filePath, function (status) {
+        // 检查页面是否正常加载完毕
+        if (status !== 'success') {
+            console.error('Mail render error: ' + status);
+            exit();
+        }
+
+       // 2.5 秒后开始对图表截图
+        setTimeout(function () {
+            try {
+                saveCanvasAsImage();
+                replaceCanvasWithImage();
+                tailInWorkAndSaveHtml();
+            } catch (ex) {
+                console.error('Mail render error:');
+                console.error(ex);
+            } finally {
+                exit();
+            }
+        }, 2500);
+    });
+})();
+```
+
+## 自动化
+
+将上述脚本保存为 **mail-render.js**，通过将报表数据转为 **ECharts** 等前端图标库实现的页面后（如保存在本地，路径为：**./report_20180408.html**），通过服务器环境执行这段 **shell** 脚本：`phantomjs mail-render.js ./report_20180408.html`。
+
+然后将生成的 **data-mail.html** 作为邮件内容，**data-mail-attach-image.list** 内的图片作为附件，调用 **PHPMailer/nodemailer** 发送邮件即可。
