@@ -1,5 +1,5 @@
 ---
-title: 用 PhantomJS 让邮件报表图文并茂
+title: 用 PhantomJS 让邮件报表图文并茂（一）
 date: 2018-3-28 00:00:00
 categories: [前端]
 tags: [前端, PhantomJS, 邮件]
@@ -54,3 +54,119 @@ document.querySelectorAll('canvas')
 
 基本思路出来了，那么如何把它运用在我们生成报表邮件的服务器上呢？
 
+使用 PHPMailer 和 nodemailer 等组件发送邮件时，都是提供一个本地路径作为附件参数。组件发送邮件时从本地文件中读取并发送。
+
+所以我们对图表的截图需要保存在本地，这里不方便通过页面内部脚本实现，我们可以借助 phantomJS 的截图 API。
+
+phantomJS 脚本中可以这样写：
+
+```javascript
+var fs = require('fs');
+var page = require('webpage').create();
+
+// 可改为外部传参
+var outputDir = '.';
+
+// 将页面内的 canvas 保存为图片
+function saveCanvasAsImage() {
+    // 检测页面中所有 canvas 的位置
+    var _canvasArr = page.evaluate(function () {
+        var canvasArr = [];
+
+        var canvasList = document.querySelectorAll('canvas');
+        [].forEach.call(canvasList, function (canvas, idx) {
+            var name = 'attach_' + idx + '.png';
+            canvas.setAttribute('data-image-file-name', name);
+
+            var rect = canvas.getBoundingClientRect();
+            canvasArr.push({
+                name: name,
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height
+            });
+        });
+
+        return canvasArr;
+    });
+
+    // 对检测到的 canvas 进行截图
+    _canvasArr.forEach(function (canvasInfo) {
+        var name = canvasInfo.name;
+
+        page.clipRect = canvasInfo;
+
+        try {
+            page.render(outputDir + '/' + name, renderOptions);
+        } catch (ex) {
+            console.error('canvas 截图失败：', ex);
+        }
+    });
+
+    // 保存附件列表，供发邮件侧查询
+    var filePath = outputDir + '/data-mail-attach-image.list';
+    var fileContent = canvasArr.map(function (canvasInfo) {
+        return canvasInfo.name;
+    }).join('\n');
+
+    fs.write(filePath, fileContent, 'w');
+}
+```
+
+邮件内的附件会有一个 **cid** 标记，我们这边约定好，发送邮件时的 **cid** 使用刚才保存到 **data-mail-attach-image.list** 内的图片文件名即可。
+
+需要注意的是，**phantomJS** 的 **webkit** 内核可能过旧，**querySelectorAll** 返回的 **dom list** 没有 **forEach** 函数的话，需要通过 **[].forEach.call** 来实现。
+
+接下来则是将 **canvas** 替换为使用 **cid** 标记附件资源的 **img** 标签：
+
+```javascript
+// 用附件图片替换 canvas
+function replaceCanvasWithImage() {
+    page.evaluate(function () {
+        var canvasList = document.querySelectorAll('canvas');
+        [].forEach.call(canvasList, function (canvas) {
+            var imageFileName = canvas.getAttribute('data-img-file-name');
+
+            var img = document.createElement('img');
+            img.className = canvas.className;
+            // img.style.cssText = canvas.style.cssText;
+            var cssText = canvas.getAttribute('style');
+            img.setAttribute('style', cssText);
+            img.width = canvas.width;
+            img.height = canvas.height;
+
+            // img.src = canvas.toDataURL();
+            img.src = 'cid: ' + imgFileName;
+
+            canvas.parentElement.insertBefore(img, canvas);
+            canvas.parentElement.removeChild(canvas);
+        });
+    });
+}
+```
+
+最后，做好清理页面脚本等收尾工作，将最终的页面 **dom** 转为 **html** 即可。
+
+```javascript
+// 收尾并保存 html
+function tailInWorkAndSaveHtml() {
+    // 清理邮件客户端内无效的 script 标签
+    page.evaluate(function () {
+        var scriptList = document.querySelectorAll('script');
+        [].forEach.call(scriptList, function (script) {
+            script.parentElement.removeChild(script);
+        });
+    });
+
+    // 提取页面的 outterHTML，添加 DOCTYPE 后保存为 html 文件，作为邮件内容
+    var html = page.evaluate(function () {
+        return document.documentElement.outerHTML;
+    });
+
+    var filePath = outputDir + '/data-mail.html';
+    var fileContent = '<!DOCTYPE html>\n' + html;
+
+    fs.write(filePath, fileContent, 'w');
+}
+```
