@@ -65,6 +65,7 @@ document.querySelectorAll('canvas')
 ```javascript
 var fs = require('fs');
 var page = require('webpage').create();
+var system = require('system');
 
 // 可改为外部传参
 var outputDir = '.';
@@ -100,7 +101,9 @@ function saveCanvasAsImage() {
         page.clipRect = canvasInfo;
 
         try {
-            page.render(outputDir + '/' + name, renderOptions);
+            page.render(outputDir + '/' + name, {
+                format: 'png'
+            });
         } catch (ex) {
             console.error('canvas 截图失败：', ex);
         }
@@ -108,7 +111,7 @@ function saveCanvasAsImage() {
 
     // 保存附件列表，供发邮件侧查询
     var filePath = outputDir + '/data-mail-attach-image.list';
-    var fileContent = canvasArr.map(function (canvasInfo) {
+    var fileContent = _canvasArr.map(function (canvasInfo) {
         return canvasInfo.name;
     }).join('\n');
 
@@ -139,7 +142,7 @@ function replaceCanvasWithImage() {
             img.height = canvas.height;
 
             // img.src = canvas.toDataURL();
-            img.src = 'cid: ' + imgFileName;
+            img.src = 'cid: ' + imageFileName;
 
             canvas.parentElement.insertBefore(img, canvas);
             canvas.parentElement.removeChild(canvas);
