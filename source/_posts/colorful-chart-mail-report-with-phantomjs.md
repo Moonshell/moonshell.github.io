@@ -131,7 +131,7 @@ function replaceCanvasWithImage() {
     page.evaluate(function () {
         var canvasList = document.querySelectorAll('canvas');
         [].forEach.call(canvasList, function (canvas) {
-            var imageFileName = canvas.getAttribute('data-img-file-name');
+            var imageFileName = canvas.getAttribute('data-image-file-name');
 
             var img = document.createElement('img');
             img.className = canvas.className;
