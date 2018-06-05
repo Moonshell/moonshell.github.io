@@ -1,5 +1,5 @@
 ---
-title: 用 PhantomJS 让邮件报表图文并茂（二）实践篇
+title: 用 PhantomJS 让邮件报表图文并茂（二）完善篇
 date: 2018-4-26 00:00:00
 categories: [前端]
 tags: [前端, PhantomJS, 邮件]
