@@ -69,6 +69,7 @@ theme: gandalfr
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/krimeshu/krimeshu.github.io
+##  repo: 'https://github.com/krimeshu/krimeshu.github.io'
   branch: master
+  repository: 'git@github.com:krimeshu/krimeshu.github.io.git'
   
