@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Shu 的点滴积累
+title: 亦知亦解
 subtitle:
 description:
 author: krimeshu
@@ -69,6 +69,7 @@ theme: gandalfr
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/krimeshu/krimeshu.github.io
+##  repo: 'https://github.com/krimeshu/krimeshu.github.io'
   branch: master
+  repository: 'git@github.com:krimeshu/krimeshu.github.io.git'
   
