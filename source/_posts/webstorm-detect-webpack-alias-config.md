@@ -1,5 +1,5 @@
 ---
-title: 让 WebStorm 配置自动识别 Webpack 的 alias 配置
+title: 让 WebStorm 自动识别 Webpack 的 alias 配置
 date: 2020-5-24 14:20:00
 categories: [前端]
 tags: [前端, Webpack, WebStorm]
@@ -9,6 +9,8 @@ tags: [前端, Webpack, WebStorm]
 ## 背景
 
 我们都经常遇到这个情况，在 Web 项目目录结构划分得细致之后，从某个子组件引用公共模块时，如果使用准确的相对路径，路径可能会变得相当长：
+
+<!-- more -->
 
 ```
 ├── common
