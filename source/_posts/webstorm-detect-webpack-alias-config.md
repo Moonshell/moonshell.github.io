@@ -23,7 +23,7 @@ tags: [前端, Webpack, WebStorm]
 
 此时，如果在 **top-bar.vue** 里引用 **net.js**，路径将会是这样：
 
-```
+```javascript
 import * as net from '../../common/net.js'
 ```
 
@@ -31,7 +31,7 @@ import * as net from '../../common/net.js'
 
 所以我们经常在 Webpack 里做类似这样的配置：
 
-```
+```javascript
 // webpack.config.js
 module.exports = {
     // ...
@@ -46,7 +46,7 @@ module.exports = {
 
 然后不管需要用到公共组件的文件在哪个层级，都可以直接写成：
 
-```
+```javascript
 import * as net from '@/common/net.js'
 ```
 
@@ -82,7 +82,7 @@ import * as net from '@/common/net.js'
 
 于是在 **webpack.config.js** 内，拼装配置的过程中，添加了一段代码，向当前项目目录内输出了一个临时文件：
 
-```
+```javascript
 require('fs').writeFileSync(__dirname + '/detect.log', 'Created:' + new Date());
 ```
 
