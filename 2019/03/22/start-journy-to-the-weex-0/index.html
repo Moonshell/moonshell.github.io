@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-cmn-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Weex 开发新手上路 - (1) 启程踩坑篇 · 亦知亦解</title><meta name="description" content="Weex 开发新手上路 - (1) 启程踩坑篇 - krimeshu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/gandalfr.css"><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/solarized-light.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.krimeshu.com/atom.xml" title="亦知亦解"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/icon-tech.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="//github.com/krimeshu" target="_self" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Weex 开发新手上路 - (1) 启程踩坑篇</h1><div class="tags"><a href="/tags/node-js/" class="tag-title">#node.js</a><a href="/tags/weex/" class="tag-title">#weex</a></div><div class="post-info">Mar 22, 2019</div><aside id="toc" class="toc-wrap"><h3 class="toc-title">目录</h3><div class="toc-tree"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SDK-安装失败"><span class="toc-text">SDK 安装失败</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动-iPhone-调试失败"><span class="toc-text">启动 iPhone 调试失败</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CocoaPods-的安装"><span class="toc-text">CocoaPods 的安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装完毕"><span class="toc-text">安装完毕</span></a></li></ol></div></aside><style type="text/css">.toc-wrap {
+    float: right;
+    padding: 10px 30px 20px 24px;
+    margin-bottom: 10px;
+    background: #f2f8f2;
+}
+.toc-title::before {
+    content: '#';
+    color: #42b983
+}
+.toc, .toc-child {
+    list-style: none;
+    padding-left: 20px;
+}</style><div class="post-content"><p>最近，面对产品经理们越来越任性的需求、测试同学越来越火眼睛睛的眼力，不由得感觉到：WebView 是有极限的——该试试更贴近原生的框架了！ </p>
+<p>什么是 Weex ？官方文档中的定义是 <strong>“Weex 是使用流行的 Web 开发体验来开发高性能原生应用的框架”</strong>。</p>
+<p>关于如何使用 Weex，官方文档中已经有步骤说明。但你按照文档开始尝试时，还是可能会遇到一些没提及的问题。</p>
+<p>这里对之前遇到的问题和解决方法做个记录，大家如果遇到类似情况可以参考处理。</p>
+<a id="more"></a>
+<p>基本流程请阅读 <a href="https://weex.apache.org/zh/guide/introduction.html" target="_blank" rel="noopener">Weex 官方文档</a>，这里不再赘述。</p>
+<h1 id="SDK-安装失败"><a href="#SDK-安装失败" class="headerlink" title="SDK 安装失败"></a>SDK 安装失败</h1><p>开始的第一个问题：全局安装 weex-toolkit 失败。</p>
+<p>搜索参考 <a href="https://npm.community/t/global-installs-sudo-npm-i-g-fail-on-mac-after-6-5-upgrade-works-fine-after-6-4-1-downgrade/4082" target="_blank" rel="noopener">Global installs (sudo npm i -g) fail on Mac after 6.5 upgrade. Works fine after 6.4.1 downgrade.</a></p>
+<p>通过修复以前安装的模块和 cache 权限解决，执行以下命令（请确认在自己的个人电脑环境下执行）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) ~/.npm</span><br><span class="line">sudo chown -R $(whoami) /usr/local/lib</span><br><span class="line">sudo chown -R $(whoami) /usr/local/bin</span><br></pre></td></tr></table></figure>
+<p>将配置修复后，终于顺利安装了 weex-toolkit。</p>
+<h1 id="启动-iPhone-调试失败"><a href="#启动-iPhone-调试失败" class="headerlink" title="启动 iPhone 调试失败"></a>启动 iPhone 调试失败</h1><p>一路继续创建项目、运行 Web 版 demo、加入 iOS 平台支持、执行 <code>weex run ios</code> 启动 iOS 调试——</p>
+<p>新问题出现了。</p>
+<p>如果没安装 Xcode 的话，这一步会提示 ios-deploy 安装失败：</p>
+<blockquote>
+<p>npm ERR! <a href="mailto:ios-deploy@1.9.4" target="_blank" rel="noopener">ios-deploy@1.9.4</a> preinstall: <code>./src/scripts/check_reqs.js &amp;&amp; xcodebuild</code></p>
+</blockquote>
+<p>这个情况的话，只要从 AppStore 安装 Xcode 即可。</p>
+<p>首次启动点击确认同意协议、确定安装相关开发组件，再次尝试执行 <code>weex run ios</code>，就不会出现刚才的问题了。</p>
+<h1 id="CocoaPods-的安装"><a href="#CocoaPods-的安装" class="headerlink" title="CocoaPods 的安装"></a>CocoaPods 的安装</h1><p>这次 ios-deploy 安装成功了，但之后马上发现还是无法启动 iOS 调试：</p>
+<blockquote>
+<p>Command failed: pod update</p>
+<p>/bin/sh: pod: command not found</p>
+</blockquote>
+<p>搜索错误关键字 <code>pos update</code>，得知需要安装 cocoapods，似乎是一个 iOS 的第三方开源组件库管理器。</p>
+<p>执行 <code>sudo gem install cocoapods</code>，等半天后提示从 <a href="https://ruby.taobao.org" target="_blank" rel="noopener">https://ruby.taobao.org</a> 下载失败。</p>
+<p>然后发现，这个站点居然停止维护了: <a href="https://www.oschina.net/news/71749/taobao-gems-ruby-china" target="_blank" rel="noopener">taobao Gems 源已停止维护，现由 ruby-china 提供镜像服务</a></p>
+<p>于是更换源，网上搜了几个，换了半天都没用。</p>
+<p>怀疑是公司的内网代理问题，但 proxifier 里并没有反应，终端里输出 <code>$http_proxy</code> 也是正确的代理地址。</p>
+<p>最后通过手动添加 <code>--http-proxy</code> 参数，终于安装成功了……</p>
+<p>各种常用工具的配置方法: <a href="https://cloud.tencent.com/developer/article/1114138" target="_blank" rel="noopener">设置 git/npm/bower/pip/gem镜像或代理</a></p>
+<h1 id="安装完毕"><a href="#安装完毕" class="headerlink" title="安装完毕"></a>安装完毕</h1><p>经过半天的折腾，环境终于安装完毕，可以在 iPhone 模拟器内启动项目了。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/05/22/start-journy-to-the-weex-1/" class="prev">PREV</a><a href="/2018/08/24/colorful-chart-mail-report-with-phantomjs-1/" class="next">NEXT</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQzMi8xMDk2OQ=="></div><script>(function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+})(document, 'script');</script><div class="copyright"><p>© 2017 - 2020 <a href="http://blog.krimeshu.com">krimeshu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/MikeCoder/hexo-theme-gandalfr" target="_blank">hexo-theme-gandalfr</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261274049'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261274049%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></p></div></footer></div><script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" crossorigin="anonymous"></script><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js" crossorigin="anonymous"></script><script>$(document).ready(function() { $('pre').each(function(i, block) { hljs.highlightBlock(block); }); });</script></body></html>

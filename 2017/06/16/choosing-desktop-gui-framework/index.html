@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="zh-cmn-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>那些你不知道的 node.js 桌面应用开发框架 · 亦知亦解</title><meta name="description" content="那些你不知道的 node.js 桌面应用开发框架 - krimeshu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/gandalfr.css"><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/solarized-light.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.krimeshu.com/atom.xml" title="亦知亦解"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/icon-tech.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="//github.com/krimeshu" target="_self" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">那些你不知道的 node.js 桌面应用开发框架</h1><div class="tags"><a href="/tags/node-js/" class="tag-title">#node.js</a><a href="/tags/桌面应用/" class="tag-title">#桌面应用</a><a href="/tags/感想/" class="tag-title">#感想</a></div><div class="post-info">Jun 16, 2017</div><aside id="toc" class="toc-wrap"><h3 class="toc-title">目录</h3><div class="toc-tree"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#positron"><span class="toc-text">positron</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#libui-node"><span class="toc-text">libui-node</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#react-x11"><span class="toc-text">react-x11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#node-qt"><span class="toc-text">node-qt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reactXP"><span class="toc-text">reactXP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-text">后记</span></a></li></ol></div></aside><style type="text/css">.toc-wrap {
+    float: right;
+    padding: 10px 30px 20px 24px;
+    margin-bottom: 10px;
+    background: #f2f8f2;
+}
+.toc-title::before {
+    content: '#';
+    color: #42b983
+}
+.toc, .toc-child {
+    list-style: none;
+    padding-left: 20px;
+}</style><div class="post-content"><blockquote>
+<p>说到 <code>node.js</code> 的 GUI 开发方案，首先想到的就是 <code>electron</code> 和 <code>nw.js</code>。但除了它们之外，是否存在其它更轻量级的技术方案可供选择呢？</p>
+</blockquote>
+<p><img src="/images/choosing-desktop-gui-framework/node-gui.png" alt="node-gui"></p>
+<a id="more"></a>
+<p>这两天，翻出了几年前在校时用 <code>winform</code> 写的小工具，发现虽然能使用，部分功能却是已经需要改进了。</p>
+<p>工具的源码已经丢失，现在用的电脑里也没有再安装 <code>winform</code> 相关的开发环境。于是决定使用 <code>node.js</code> 重写工具。</p>
+<p>估算一下，重写的核心代码大概也就一、两KB，毕竟只是每次打开后只用几分钟的小工具，用来爬一爬网站内容之类的需求，业务逻辑挺简单的。</p>
+<p>在这个基础上，再加上个方便操作的 GUI 就好了，于是首先想到的方案自然就是 <code>electron</code> 或者 <code>nw.js</code>。</p>
+<p><img src="https://camo.githubusercontent.com/11e7cfd04eceb1ea7464e99edda0e7000487f343/68747470733a2f2f656c656374726f6e2e61746f6d2e696f2f696d616765732f656c656374726f6e2d6c6f676f2e737667" alt="electron"></p>
+<p>但打包了 <code>Chromium</code> 内核和 <code>node.js</code> 环境后，如今的 <code>electron</code> 和 <code>nw.js</code> 动不动就上百MB的大小，用来开发这样的小工具实在是不划算。</p>
+<p>而且在自己另一台破电脑上，<code>electron</code> 启动时间动不动就是十几秒，操作响应也不是很灵敏，达不到小而快的目标效果。</p>
+<p>除了它们之外，是否还有其它的 <code>node.js</code> GUI 开发方案呢？</p>
+<p>于是找了找其它 <code>node.js</code> 的 GUI 框架，大家有兴趣的话可以关注一下：</p>
+<h2 id="positron"><a href="#positron" class="headerlink" title="positron"></a><code>positron</code></h2><p><code>positron</code> 兼容于 <code>electron</code>，只是 Web 内核方面，把 <code>Chromium</code> 换成了 <code>Gecko</code>。</p>
+<p>目前此项目已停止开发。</p>
+<p>项目地址：<a href="https://github.com/mozilla/positron" target="_blank" rel="noopener">https://github.com/mozilla/positron</a></p>
+<h2 id="libui-node"><a href="#libui-node" class="headerlink" title="libui-node"></a><code>libui-node</code></h2><p><img src="https://github.com/parro-it/libui-node/raw/master/docs/media/Window-macOS.png" alt="libui-node"></p>
+<p><code>libui-node</code> 提供了简单便携的基于 C 的 GUI 库，目标是成为相对于 <code>electron</code> 之外跨平台 GUI 开发的轻量级选择。</p>
+<p>跑了一下 DEMO，组件反馈虽然略有迟缓，但可用组件看起来还挺丰富的。</p>
+<p>不过目前整个项目大小有上百MB，暂时似乎没有完善的部署发布方案，希望之后会日渐完善吧。</p>
+<p>项目地址：<a href="https://github.com/parro-it/libui-node" target="_blank" rel="noopener">https://github.com/parro-it/libui-node</a></p>
+<h2 id="react-x11"><a href="#react-x11" class="headerlink" title="react-x11"></a><code>react-x11</code></h2><p><img src="https://cloud.githubusercontent.com/assets/173025/24536323/6af97598-1625-11e7-88d4-74f429b7f470.gif" alt="react-x11"></p>
+<p><code>react-x11</code> 刚刚起步，目前可用组件只有 <code>window</code>，且需要运行在 X Window 环境下（通常是 linux 桌面环境，或者 osx + <code>XQuattz</code>）。</p>
+<p>项目地址：<a href="https://github.com/sidorares/react-x11" target="_blank" rel="noopener">https://github.com/sidorares/react-x11</a></p>
+<h2 id="node-qt"><a href="#node-qt" class="headerlink" title="node-qt"></a><code>node-qt</code></h2><p><img src="https://github.com/arturadib/node-qt/raw/master/examples/helloworld.png" alt="node-qt"></p>
+<p><code>node-qt</code> 以 <code>node.js</code> 附件的形式提供了 Qt 库的原生绑定。</p>
+<p>但在我的 Windows 环境下似乎水土不服，安装失败（貌似是需要 <code>MSVC++</code> 而不是 <code>VS2013</code> 的缘故）。</p>
+<p>项目地址：<a href="https://github.com/yue/node-gui" target="_blank" rel="noopener">https://github.com/yue/node-gui</a></p>
+<h2 id="reactXP"><a href="#reactXP" class="headerlink" title="reactXP"></a><code>reactXP</code></h2><p><code>reactXP</code> 是由微软 skype 团队近期推出的跨平台开发框架（<code>XP</code> = <code>Cross Platform</code>）。支持安卓、iOS、桌面等多平台。</p>
+<p>看起来具体实现基本就是把 <code>react-native</code>、<code>electron</code> 等方案整个打包，再增加了对 Win10 的 UWP 支持，是个大而全而非小而轻的方案？</p>
+<p>项目地址：<a href="https://github.com/Microsoft/reactxp" target="_blank" rel="noopener">https://github.com/Microsoft/reactxp</a></p>
+<hr>
+<p>还有一些不成熟或是有问题的方案，在这就没有列举出来了。</p>
+<p>其他语言方面，尝试了 <code>python</code> 的 <code>Tkinter</code>。发现挺方便的，安装完 <code>Python</code> 就能使用，但能实现的效果似乎很有限；<code>PyQt</code> 更强大、美观，但需要花时间去学习 QT，没法现在就立刻动手做。</p>
+<p>而且两者都不如类 Web 的 GUI 方案来的灵活便捷（<code>React</code> 也算此类）。</p>
+<p>这么说来，近几年桌面开发似乎越来越不温不火，大家的关注中心似乎都转移到了移动端上。</p>
+<p>而移动端的话，原生开发方面，从传统原生开发方式与 <code>react-native</code> 的出现、苹果推出 <code>Swift</code>，到最近谷歌钦定 <code>Kotlin</code> 作为安卓开发的一级语言；Web 前端开发方面，<code>node.js</code> 带来的 <code>grunt</code>、<code>gulp</code>、<code>webpack</code> 工作流，以及各种优秀 MVVM 框架竞相出现，新技术不断出现，让前端开发成为了众所周知最爱造轮子的一拨人。</p>
+<p>移动端涌现的各种新工具、框架、语言，对行业入门者来说有一定学习成本，但也确实带来了种种便利。它们一般都解决了各种以往开发方式中的痛点</p>
+<p>对于日渐变化的移动端开发需求，确实提高了生产效率，改善开发体验。但新出现的方案毕竟需要在实践中逐步完善，所以它们每天都在不断迭代更新，甚至又出现更新的其它方案。</p>
+<p>或许可以这么说，我们现在正经历着桌面端开发向移动端转移中心的过渡期。桌面端 GUI 开发的需求存在感日渐稀薄，现有传统开发方案已能应对日常需求，所以虽然也有一些技术痛点，却并没有更新开发方式的必要。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这次的小工具的开发，最后采用的形式是编写好关键的 JS 脚本，加入 <code>Greasemonkey</code> 后直接在浏览器内执行，抓取需要的内容。</p>
+<p>除此之外，做成 <code>Chrome</code> 插件，或者直接写成命令行工具，也是可选的轻量级方案。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/08/24/basic-knowledge-points-for-beginner-1/" class="prev">PREV</a><a href="/2017/05/04/basic-knowledge-points-for-beginner/" class="next">NEXT</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQzMi8xMDk2OQ=="></div><script>(function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+})(document, 'script');</script><div class="copyright"><p>© 2017 - 2020 <a href="http://blog.krimeshu.com">krimeshu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/MikeCoder/hexo-theme-gandalfr" target="_blank">hexo-theme-gandalfr</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261274049'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261274049%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></p></div></footer></div><script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" crossorigin="anonymous"></script><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js" crossorigin="anonymous"></script><script>$(document).ready(function() { $('pre').each(function(i, block) { hljs.highlightBlock(block); }); });</script></body></html>

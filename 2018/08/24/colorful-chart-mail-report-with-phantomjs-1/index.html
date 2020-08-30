@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh-cmn-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>用 PhantomJS 让邮件报表图文并茂（二）完善篇 · 亦知亦解</title><meta name="description" content="用 PhantomJS 让邮件报表图文并茂（二）完善篇 - krimeshu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/gandalfr.css"><link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/solarized-light.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.krimeshu.com/atom.xml" title="亦知亦解"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/icon-tech.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="//github.com/krimeshu" target="_self" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">用 PhantomJS 让邮件报表图文并茂（二）完善篇</h1><div class="tags"><a href="/tags/前端/" class="tag-title">#前端</a><a href="/tags/PhantomJS/" class="tag-title">#PhantomJS</a><a href="/tags/邮件/" class="tag-title">#邮件</a></div><div class="post-info">Aug 24, 2018</div><aside id="toc" class="toc-wrap"><h3 class="toc-title">目录</h3><div class="toc-tree"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#邮件页面布局兼容性"><span class="toc-text">邮件页面布局兼容性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试工具"><span class="toc-text">测试工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-下加载页面失败"><span class="toc-text">Windows 下加载页面失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字体渲染问题"><span class="toc-text">字体渲染问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高分屏适配"><span class="toc-text">高分屏适配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Headless-Chrome"><span class="toc-text">Headless Chrome</span></a></li></ol></div></aside><style type="text/css">.toc-wrap {
+    float: right;
+    padding: 10px 30px 20px 24px;
+    margin-bottom: 10px;
+    background: #f2f8f2;
+}
+.toc-title::before {
+    content: '#';
+    color: #42b983
+}
+.toc, .toc-child {
+    list-style: none;
+    padding-left: 20px;
+}</style><div class="post-content"><p>根据上一篇文章已经可以实现报表邮件系统的初步 DEMO 了，但其实只是提供了基本的思路。</p>
+<p>实际部署过程中，还会遇到各种各样问题，我在这一篇内一起记录下来，希望能对大家真正地有所帮助。</p>
+<a id="more"></a>
+<h2 id="邮件页面布局兼容性"><a href="#邮件页面布局兼容性" class="headerlink" title="邮件页面布局兼容性"></a>邮件页面布局兼容性</h2><p>在你写完邮件，把它发送到邮件客户端内查看的时候，可能会被邮件客户端里的效果给吓一跳。</p>
+<p>明明在浏览器里好好的，怎么在邮件客户端里就不能看了？不同客户端里效果还各不相同。</p>
+<p>主要原因在于普通网页是由现代浏览器内核的标准来进行加载、解析和渲染的，邮件客户端内的 HTML 渲染内核实现则较为古老，缺少更新。</p>
+<p>而且邮件客户端为确保邮件内容的安全性，会对邮件 HTML 进行预处理，移除修改标签、样式表、脚本，甚至阻止外部引用文件的加载。</p>
+<p>常见的问题有非内联样式失效、边距失效、图片宽度异常、背景图片失效等等。</p>
+<p>基本几个原则如下：</p>
+<ol>
+<li><p>不要写 style 标签，不要用 class 样式，只用元素的样式属性和内联样式；</p>
+</li>
+<li><p>尽量不用 margin 和 padding。使用 table 布局，通过空行、空列拉开间距效果会更为稳定。所有 table 不要并列排列，尽量嵌套在一个 table 里；</p>
+</li>
+<li><p>不要使用 float/position:absolute/position:fixed 等方式定位；</p>
+</li>
+<li><p>图片必须指定宽高和 alt 属性，指定 style=”display:block;border:none;margin:0;padding:0;” 等基本样式；</p>
+</li>
+<li><p>不要简写色值，比如 #FFF，请使用完整的的 #FFFFFF；</p>
+</li>
+</ol>
+<p>想了解得更具体的话，可以阅读参考这几篇文章：</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/lhweb15/p/6404626.html" target="_blank" rel="noopener">Html Email 邮件html页编写指南</a></p>
+<p><a href="https://swordair.com/principles-on-good-compatibility-html-mail-edm/" target="_blank" rel="noopener">兼容性良好的HTML邮件(EDM)</a></p>
+<p><a href="https://segmentfault.com/a/1190000008864116" target="_blank" rel="noopener">HTML 邮件兼容问题与解决方案</a></p>
+<p><a href="https://templates.mailchimp.com/" target="_blank" rel="noopener">HTML Email Templates Getting Started Guide</a></p>
+</blockquote>
+<h2 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h2><p>重构邮件页面，预览和调试页面效果时，可以使用 <a href="https://www.thunderbird.net/zh-CN" target="_blank" rel="noopener">Thunderbird</a> 向自己的邮箱发送测试邮件。</p>
+<p>再使用 <a href="https://testi.at" target="_blank" rel="noopener">Testi@</a> 模拟各类常见邮件客户端和设备，预览邮件效果。</p>
+<h2 id="Windows-下加载页面失败"><a href="#Windows-下加载页面失败" class="headerlink" title="Windows 下加载页面失败"></a>Windows 下加载页面失败</h2><p>在 Windows 环境下开发测试的同学可能会碰到的一个问题。</p>
+<p>假设本地待处理的网页路径为 <strong>D:\test-mail\index.html</strong>，使用的 PhantomJS 版本为 2.1.1。</p>
+<p>使用 <code>page.open(url, callback)</code> 打开页面时，如果 <code>url</code> 为 <code>fs.absolute(relativePath)</code> 处理出来的绝对路径，即 <strong>D:\test-mail\index.html</strong> 或  <strong>D:/test-mail/index.html</strong>，将会打开失败，回调函数获取的 <code>status</code> 为 <strong>fail</strong>。</p>
+<p>若添加 <strong>file://</strong> 协议头，如 <strong>file://D:/test-mail/index.html</strong>，将能够打开页面，但无法正常加载页面内容，也无法完成截图。</p>
+<p>Linux 和 Mac OS 内，打开 <code>fs.absolute()</code> 处理出来的路径是不会有这个问题的。</p>
+<p>最后发现，Windows 环境下，改用相对路径处理即可……</p>
+<p>所以，保证 PhantomJS 脚本和页面在附近目录，进行开发测试即可。</p>
+<p>部署到服务器上时，定时任务执行目录再指定为绝对路径，避免出现意外，找不到文件的情况。</p>
+<h2 id="字体渲染问题"><a href="#字体渲染问题" class="headerlink" title="字体渲染问题"></a>字体渲染问题</h2><p>当你在本地完成上述邮件测试 DEMO，部署到 linux 服务器上后，可能会发现，图表里的文字全都失踪了。</p>
+<p>这个问题一般是因为 ECharts 未指定使用的字体时，会根据国情默认采用微软雅黑字体。</p>
+<p>而 linux 服务器上没有这个字体文件，就导致 canvas 内文字无法正常渲染了。</p>
+<p>解决办法也不复杂，在服务器上添加相应字体就好。</p>
+<p>首先获得一套“微软雅黑”字体文件（本地路径为 <strong>C:\Windows\Fonts</strong>，两个文件：msyh.ttf 普通、msyhbd.ttf 加粗）</p>
+<p>在服务器的 <strong>/usr/share/fonts</strong> 目录下建立一个子目录，例如 <strong>win</strong>，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/share/fonts/win</span><br></pre></td></tr></table></figure>
+<p>将 msyh.ttf 和 msyhbd.ttf 复制到该目录下，例如这两个文件放在 <strong>/root/Desktop</strong> 下，使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /root/Desktop</span><br><span class="line">cp msyh.ttf msyhbd.ttf /usr/share/fonts/win/</span><br></pre></td></tr></table></figure>
+<p>建立字体索引信息，更新字体缓存：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/share/fonts/win</span><br><span class="line">mkfontscale</span><br><span class="line">mkfontdir</span><br><span class="line">fc-cache</span><br></pre></td></tr></table></figure>
+<p>字体安装完毕后，再运行测试 DEMO 就 OK 了。</p>
+<h2 id="高分屏适配"><a href="#高分屏适配" class="headerlink" title="高分屏适配"></a>高分屏适配</h2><p>将图表截图，发送邮件到手机上查看后，可能会发现图表的截图在高分屏上的显示效果很不理想。</p>
+<img src="/images/colorful-chart-mail-report-with-phantomjs/font-compare.png" title="popup">
+<p>这个问题在 Mac 电脑和手机端的屏幕上，看起来会相当明显。</p>
+<p>那么如何截取更清晰的图片素材呢？</p>
+<p>首先，将 PhantomJS 的 page 对象的 <code>zoomFactor</code> 属性设为 2。</p>
+<p>这个参数相当于浏览器内，通过 <strong>Ctrl + 鼠标滚轮</strong> 操作将页面放大为 200% 的视图，确保截图能截出两倍的尺寸大小。</p>
+<p>同时，为页面内的 <code>window.devicePixelRatio</code> 设置为 2，这里是为了让 ECharts 在 Canvas 内绘制两倍像素的图表，否则截取出来的 Canvas 仍是模糊不清的大图而已。</p>
+<p>最后，将检测到的 Canvas 坐标和尺寸乘以 2，就能截取出需要的两倍像素高清素材了。</p>
+<p>如果需要截取 3 倍的，修改相关参数即可。</p>
+<h2 id="Headless-Chrome"><a href="#Headless-Chrome" class="headerlink" title="Headless Chrome"></a>Headless Chrome</h2><p>就在我们完成这个项目，部署运行的第二天，我们看到了一条新闻：<strong>PhantomJS 开发者宣布“中止”项目开发</strong>。</p>
+<p>现有的项目仍然是可以运行的，但若是日后发现其它问题，或者有严重漏洞的情况，可能还是需要使用新的方案来替代它。</p>
+<p>通过网上搜索这个话题，发现一个很好的替代方案——谷歌推出的 Puppeteer。</p>
+<p>可以在 node.js 环境下很方便的调用 Headless 也就是无 UI 的 Chrome。</p>
+<p>然后通过调用它提供的 API，就能实现相同的图表截图需求。不过需要对原有的截图脚本进行相应改动和调整。</p>
+<p>对于高分屏的截图方案甚至更简单，直接调用 <code>page.setViewport</code> 或 <code>page.emulate</code> 模拟高分屏的 <strong>viewport</strong> 即可。</p>
+<p>如果页面内有 <strong>alert</strong> 可能会阻塞页面加载，导致无法完成截图操作。</p>
+<p>这个情况一般进行监听后，对 <strong>dialog</strong> 做关闭操作即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">page.on(<span class="string">'dialog'</span>, <span class="keyword">async</span> dialog =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Dialog:\n'</span>, dialog.message());</span><br><span class="line">    <span class="keyword">await</span> dialog.dismiss();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其它具体 API 和操作方法，参考官方示例和文档即可：<a href="https://www.npmjs.com/package/puppeteer" target="_blank" rel="noopener">Puppeteer</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2019/03/22/start-journy-to-the-weex-0/" class="prev">PREV</a><a href="/2018/04/08/colorful-chart-mail-report-with-phantomjs/" class="next">NEXT</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQzMi8xMDk2OQ=="></div><script>(function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+})(document, 'script');</script><div class="copyright"><p>© 2017 - 2020 <a href="http://blog.krimeshu.com">krimeshu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/MikeCoder/hexo-theme-gandalfr" target="_blank">hexo-theme-gandalfr</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261274049'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261274049%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></p></div></footer></div><script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" crossorigin="anonymous"></script><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js" crossorigin="anonymous"></script><script>$(document).ready(function() { $('pre').each(function(i, block) { hljs.highlightBlock(block); }); });</script></body></html>
